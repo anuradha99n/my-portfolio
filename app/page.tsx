@@ -35,6 +35,7 @@ export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("home")
   const [typedText, setTypedText] = useState("")
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
+  const [year, setYear] = useState<number | null>(null);
 
   const typingTexts = ["DevOps Engineer", "Cloud Enthusiast", "Linux Administrator", "Automation Specialist"]
 
@@ -88,6 +89,11 @@ export default function Portfolio() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  // Set year in footer
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -155,29 +161,36 @@ export default function Portfolio() {
 
   const projects = [
     {
+      title: "🗑️ trash-cli",
+      description: "A simple, safe, and scriptable command-line trash manager for Linux. Instead of deleting files permanently with rm, use trash-cli to move them to a recoverable trash bin — just like your desktop environment.",
+      image: "/placeholder.svg?height=200&width=300",
+      demoUrl: "https://github.com/anuradha99n/trash-cli",
+      githubUrl: "https://github.com/anuradha99n/trash-cli",
+    },
+    {
+      title: "Dataset Integration",
+      description: "My ML research dataset integration program. Integrates multiple protein data files into a single CSV for analysis.",
+      image: "/placeholder.svg?height=200&width=300",
+      demoUrl: "https://github.com/anuradha99n/dataset_integration",
+      githubUrl: "https://github.com/anuradha99n/dataset_integration",
+    },
+    {
       title: "Kubernetes CI/CD Pipeline",
       description: "Automated deployment pipeline using Jenkins, Docker, and Kubernetes with monitoring and alerting.",
       image: "/placeholder.svg?height=200&width=300",
       demoUrl: "#",
       githubUrl: "#",
     },
-    {
-      title: "Infrastructure as Code",
-      description: "Complete AWS infrastructure provisioning using Terraform with automated scaling and backup.",
-      image: "/placeholder.svg?height=200&width=300",
-      demoUrl: "#",
-      githubUrl: "#",
-    },
-    {
-      title: "Monitoring Dashboard",
-      description: "Real-time system monitoring using Prometheus, Grafana, and custom alerting rules.",
-      image: "/placeholder.svg?height=200&width=300",
-      demoUrl: "#",
-      githubUrl: "#",
-    },
+
+    
   ]
 
   const articles = [
+    {
+      title: "🗑️ trash-cli: A Safer Alternative to rm for Terminal Users",
+      snippet: "Learn how trash-cli can help you avoid accidental file deletions and safely manage your files from the terminal.",
+      url: "https://medium.com/@anuradha99n/%EF%B8%8F-trash-cli-a-safer-alternative-to-rm-for-terminal-users-414ededdaf0a",
+    },
     {
       title: "Mastering Kubernetes Deployments",
       snippet:
@@ -548,8 +561,9 @@ export default function Portfolio() {
                       size="sm"
                       className="bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200"
                       asChild
+                      disabled={!project.demoUrl || project.demoUrl === '#'}
                     >
-                      <Link href={project.demoUrl}>
+                      <Link href={project.demoUrl && project.demoUrl !== '#' ? project.demoUrl : '#'} tabIndex={project.demoUrl && project.demoUrl !== '#' ? 0 : -1} aria-disabled={!project.demoUrl || project.demoUrl === '#'}>
                         <ExternalLink className="h-4 w-4 mr-2" />
                         Live Demo
                       </Link>
@@ -559,8 +573,9 @@ export default function Portfolio() {
                       variant="outline"
                       className="border-slate-600 text-gray-300 hover:border-blue-400 hover:text-blue-400 bg-transparent transition-colors duration-200"
                       asChild
+                      disabled={!project.githubUrl || project.githubUrl === '#'}
                     >
-                      <Link href={project.githubUrl}>
+                      <Link href={project.githubUrl && project.githubUrl !== '#' ? project.githubUrl : '#'} tabIndex={project.githubUrl && project.githubUrl !== '#' ? 0 : -1} aria-disabled={!project.githubUrl || project.githubUrl === '#'}>
                         <Github className="h-4 w-4 mr-2" />
                         GitHub
                       </Link>
@@ -591,7 +606,7 @@ export default function Portfolio() {
                   Explore my open-source projects, automation scripts, and infrastructure code.
                 </p>
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200" asChild>
-                  <Link href="https://github.com/anuradha99" target="_blank">
+                  <Link href="https://github.com/anuradha99n" target="_blank">
                     <Github className="h-4 w-4 mr-2" />
                     Visit GitHub Profile
                   </Link>
@@ -606,7 +621,7 @@ export default function Portfolio() {
                 <div className="w-16 h-1 bg-indigo-400 mx-auto mb-6"></div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
                 {articles.map((article, index) => (
                   <div
                     key={index}
@@ -620,7 +635,7 @@ export default function Portfolio() {
                       className="border-slate-600 text-gray-300 hover:border-indigo-400 hover:text-indigo-400 bg-transparent transition-colors duration-200"
                       asChild
                     >
-                      <Link href={article.url}>
+                      <Link href={article.url} target={article.url.includes('medium.com') ? '_blank' : undefined} rel={article.url.includes('medium.com') ? 'noopener noreferrer' : undefined}>
                         Read More
                         <ExternalLink className="h-4 w-4 ml-2" />
                       </Link>
@@ -706,7 +721,7 @@ export default function Portfolio() {
 
             <div className="flex justify-center space-x-6 mb-8">
               {[
-                { href: "https://github.com/anuradha99", icon: Github },
+                { href: "https://github.com/anuradha99n", icon: Github },
                 { href: "https://www.linkedin.com/in/anuradha99/", icon: Linkedin },
                 { href: "mailto:contact@example.com", icon: Mail },
               ].map((social, index) => (
@@ -722,7 +737,7 @@ export default function Portfolio() {
             </div>
 
             <div className="border-t border-slate-800 pt-8">
-              <p className="text-gray-500 text-sm">© {new Date().getFullYear()} Anuradha. All rights reserved.</p>
+              <p className="text-gray-500 text-sm">© {year ?? ""} Anuradha. All rights reserved.</p>
             </div>
           </div>
         </div>

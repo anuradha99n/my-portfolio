@@ -26,9 +26,13 @@ import {
   Activity,
   MapPin,
   Calendar,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { useRef } from "react";
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -36,6 +40,10 @@ export default function Portfolio() {
   const [typedText, setTypedText] = useState("")
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
   const [year, setYear] = useState<number | null>(null);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const carouselApiRef = useRef<any>(null);
 
   const typingTexts = ["DevOps Engineer", "Cloud Enthusiast", "Linux Administrator", "Automation Specialist"]
 
@@ -117,60 +125,66 @@ export default function Portfolio() {
     { name: "Linux", icon: Terminal },
     { name: "Docker", icon: Container },
     { name: "Kubernetes", icon: Settings },
-    { name: "Ansible", icon: Code },
-    { name: "Terraform", icon: Cloud },
-    { name: "Jenkins", icon: GitBranch },
+    //{ name: "Ansible", icon: Code },
+    //{ name: "Terraform", icon: Cloud },
+    //{ name: "Jenkins", icon: GitBranch },
     { name: "GitHub Actions", icon: Zap },
-    { name: "Prometheus", icon: Activity },
-    { name: "Grafana", icon: Monitor },
+    //{ name: "Prometheus", icon: Activity },
+    //{ name: "Grafana", icon: Monitor },
   ]
 
   // Updated experiences based on LinkedIn profile
   const experiences = [
     {
-      title: "DevOps Engineer",
-      company: "Freelance",
-      location: "Remote",
-      duration: "2023 - Present",
-      type: "Freelance",
-      description: "Providing DevOps consulting and implementation services for various clients.",
+      title: "Systems Engineer (Trainee)",
+      company: "Central Engineering Consultancy Bureau",
+      location: "Colombo, Western Province, Sri Lanka",
+      duration: "May 2024 - Present",
+      type: "Contract",
+      description: "Develop and test features within the company's internal ERP system using .NET4 MVC framework. Manage backup and restoration for MSSQL databases. Provide technical support, incident management, and troubleshooting to ensure minimal downtime. Participate in code reviews, improve development practices and system architecture, maintain documentation, and install/configure/maintain an Accounting system.",
       achievements: [
-        "Implemented CI/CD pipelines for multiple client projects",
-        "Automated infrastructure deployment using Terraform and Ansible",
-        "Optimized cloud costs and improved system reliability",
-        "Mentored development teams on DevOps best practices",
+        "Developed and tested features for the internal ERP system (.NET4 MVC)",
+        "Managed backup and restoration processes for MSSQL databases",
+        "Provided technical support and incident management, ensuring minimal downtime",
+        "Participated in code reviews and contributed to system architecture improvements",
+        "Maintained and updated documentation for system processes",
+        "Installed, configured, and maintained an Accounting system"
       ],
-      technologies: ["AWS", "Docker", "Kubernetes", "Terraform", "Jenkins", "Linux"],
+      technologies: [
+        "ASP.NET", "C#", "MSSQL", "SQL Server Reporting Services (SSRS)"
+      ],
     },
     {
-      title: "System Administrator",
-      company: "Previous Role",
-      location: "Sri Lanka",
-      duration: "2020 - 2023",
-      type: "Full-time",
-      description: "Managed Linux systems and implemented automation solutions.",
+      title: "Software Engineer Intern",
+      company: "Sri Lanka Telecom",
+      location: "Colombo, Western Province, Sri Lanka",
+      duration: "Mar 2023 - Aug 2023",
+      type: "Internship",
+      description: "Actively contributed to the development of the 'Smart Agro' project, an innovative initiative to revolutionize agriculture by leveraging sensor data for farm environment visualization and streamlining user management processes.",
       achievements: [
-        "Maintained high availability of critical systems",
-        "Implemented monitoring and alerting solutions",
-        "Automated routine maintenance tasks",
-        "Improved system security and compliance",
+        "Contributed to the 'Smart Agro' project for agriculture industry innovation",
+        "Developed features for sensor data visualization and user management",
+        "Collaborated with a team in a remote work environment"
       ],
-      technologies: ["Linux", "Bash", "Python", "Monitoring Tools", "Networking"],
+      technologies: [
+        "PHP", "MySQL","Bootstrap", "Git", "HTML5", "JavaScript", "CSS", 
+      ],
     },
+    
   ]
 
   const projects = [
     {
       title: "🗑️ trash-cli",
       description: "A simple, safe, and scriptable command-line trash manager for Linux. Instead of deleting files permanently with rm, use trash-cli to move them to a recoverable trash bin — just like your desktop environment.",
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/assets/images/trash-cli.png",
       demoUrl: "https://github.com/anuradha99n/trash-cli",
       githubUrl: "https://github.com/anuradha99n/trash-cli",
     },
     {
       title: "Dataset Integration",
       description: "My ML research dataset integration program. Integrates multiple protein data files into a single CSV for analysis.",
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/assets/images/dataset-integration.png",
       demoUrl: "https://github.com/anuradha99n/dataset_integration",
       githubUrl: "https://github.com/anuradha99n/dataset_integration",
     },
@@ -495,12 +509,13 @@ export default function Portfolio() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 center">
             {[
-              { icon: Cloud, title: "Cloud Infrastructure", desc: "AWS, GCP, Azure", color: "blue" },
+              { icon: Cloud, title: "Cloud Infrastructure", desc: "AWS", color: "blue" },
               { icon: Container, title: "Containerization", desc: "Docker, Kubernetes", color: "indigo" },
-              { icon: Settings, title: "Automation", desc: "Ansible, Terraform", color: "cyan" },
-              { icon: Shield, title: "Security", desc: "DevSecOps, Compliance", color: "blue" },
+              { icon: Code, title: "ASP.NET", desc: "Web Application Development", color: "green" },
+              // { icon: Settings, title: "Automation", desc: "Ansible, Terraform", color: "cyan" },
+              // { icon: Shield, title: "Security", desc: "DevSecOps, Compliance", color: "blue" },
             ].map((item, index) => (
               <div
                 key={index}
@@ -537,53 +552,184 @@ export default function Portfolio() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4 text-blue-400">Projects</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-indigo-400 mx-auto mb-8"></div>
+            {/*}
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
               Here are some of my recent DevOps and infrastructure projects
             </p>
+            */}
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <Card
-                key={index}
-                className="bg-slate-900 border-slate-700 hover:border-blue-400 transition-colors duration-200"
-              >
-                <div className="relative h-48 overflow-hidden rounded-t-lg">
-                  <Image src={project.image || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
-                </div>
-                <CardHeader>
-                  <CardTitle className="text-blue-400">{project.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-gray-300 mb-4">{project.description}</CardDescription>
-                  <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      className="bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200"
-                      asChild
-                      disabled={!project.demoUrl || project.demoUrl === '#'}
-                    >
-                      <Link href={project.demoUrl && project.demoUrl !== '#' ? project.demoUrl : '#'} tabIndex={project.demoUrl && project.demoUrl !== '#' ? 0 : -1} aria-disabled={!project.demoUrl || project.demoUrl === '#'}>
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Live Demo
-                      </Link>
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-slate-600 text-gray-300 hover:border-blue-400 hover:text-blue-400 bg-transparent transition-colors duration-200"
-                      asChild
-                      disabled={!project.githubUrl || project.githubUrl === '#'}
-                    >
-                      <Link href={project.githubUrl && project.githubUrl !== '#' ? project.githubUrl : '#'} tabIndex={project.githubUrl && project.githubUrl !== '#' ? 0 : -1} aria-disabled={!project.githubUrl || project.githubUrl === '#'}>
-                        <Github className="h-4 w-4 mr-2" />
-                        GitHub
-                      </Link>
-                    </Button>
+          {/* Desktop: Grid for first 3 projects, horizontal scroll for the rest. Mobile: 1 card + horizontal scroll for the rest. */}
+          <div className="block md:hidden">
+            {/* Mobile: Show first project as card, rest in horizontal scroll */}
+            <div>
+              {projects[0] && (
+                <Card className="bg-slate-900 border-slate-700 hover:border-blue-400 transition-colors duration-200 mb-6">
+                  <div className="relative h-48 overflow-hidden rounded-t-lg">
+                    <Image src={projects[0].image || "/placeholder.svg"} alt={projects[0].title} width={300} height={200} className="object-cover w-full h-48" />
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+                  <CardHeader>
+                    <CardTitle className="text-blue-400">{projects[0].title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-gray-300 mb-4">{projects[0].description}</CardDescription>
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        className="bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200"
+                        asChild
+                        disabled={!projects[0].demoUrl || projects[0].demoUrl === '#'}
+                      >
+                        <Link href={projects[0].demoUrl && projects[0].demoUrl !== '#' ? projects[0].demoUrl : '#'} tabIndex={projects[0].demoUrl && projects[0].demoUrl !== '#' ? 0 : -1} aria-disabled={!projects[0].demoUrl || projects[0].demoUrl === '#'}>
+                          <ExternalLink className="h-4 w-4 mr-2" />
+                          Live Demo
+                        </Link>
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="border-slate-600 text-gray-300 hover:border-blue-400 hover:text-blue-400 bg-transparent transition-colors duration-200"
+                        asChild
+                        disabled={!projects[0].githubUrl || projects[0].githubUrl === '#'}
+                      >
+                        <Link href={projects[0].githubUrl && projects[0].githubUrl !== '#' ? projects[0].githubUrl : '#'} tabIndex={projects[0].githubUrl && projects[0].githubUrl !== '#' ? 0 : -1} aria-disabled={!projects[0].githubUrl || projects[0].githubUrl === '#'}>
+                          <Github className="h-4 w-4 mr-2" />
+                          GitHub
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+              {projects.length > 1 && (
+                <div className="flex overflow-x-auto gap-6 pb-2 scrollbar-thin scrollbar-thumb-slate-700">
+                  {projects.slice(1).map((project, index) => (
+                    <Card key={index} className="min-w-[320px] max-w-xs bg-slate-900 border-slate-700 hover:border-blue-400 transition-colors duration-200">
+                      <div className="relative h-48 overflow-hidden rounded-t-lg">
+                        <Image src={project.image || "/placeholder.svg"} alt={project.title} width={300} height={200} className="object-cover w-full h-48" />
+                      </div>
+                      <CardHeader>
+                        <CardTitle className="text-blue-400">{project.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <CardDescription className="text-gray-300 mb-4">{project.description}</CardDescription>
+                        <div className="flex gap-2">
+                          <Button
+                            size="sm"
+                            className="bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200"
+                            asChild
+                            disabled={!project.demoUrl || project.demoUrl === '#'}
+                          >
+                            <Link href={project.demoUrl && project.demoUrl !== '#' ? project.demoUrl : '#'} tabIndex={project.demoUrl && project.demoUrl !== '#' ? 0 : -1} aria-disabled={!project.demoUrl || project.demoUrl === '#'}>
+                              <ExternalLink className="h-4 w-4 mr-2" />
+                              Live Demo
+                            </Link>
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="border-slate-600 text-gray-300 hover:border-blue-400 hover:text-blue-400 bg-transparent transition-colors duration-200"
+                            asChild
+                            disabled={!project.githubUrl || project.githubUrl === '#'}
+                          >
+                            <Link href={project.githubUrl && project.githubUrl !== '#' ? project.githubUrl : '#'} tabIndex={project.githubUrl && project.githubUrl !== '#' ? 0 : -1} aria-disabled={!project.githubUrl || project.githubUrl === '#'}>
+                              <Github className="h-4 w-4 mr-2" />
+                              GitHub
+                            </Link>
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="hidden md:block">
+            {/* Desktop: Grid for first 3 projects */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {projects.slice(0, 3).map((project, index) => (
+                <Card key={index} className="bg-slate-900 border-slate-700 hover:border-blue-400 transition-colors duration-200">
+                  <div className="relative h-48 overflow-hidden rounded-t-lg">
+                    <Image src={project.image || "/placeholder.svg"} alt={project.title} width={300} height={200} className="object-cover w-full h-48" />
+                  </div>
+                  <CardHeader>
+                    <CardTitle className="text-blue-400">{project.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-gray-300 mb-4">{project.description}</CardDescription>
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        className="bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200"
+                        asChild
+                        disabled={!project.demoUrl || project.demoUrl === '#'}
+                      >
+                        <Link href={project.demoUrl && project.demoUrl !== '#' ? project.demoUrl : '#'} tabIndex={project.demoUrl && project.demoUrl !== '#' ? 0 : -1} aria-disabled={!project.demoUrl || project.demoUrl === '#'}>
+                          <ExternalLink className="h-4 w-4 mr-2" />
+                          Live Demo
+                        </Link>
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="border-slate-600 text-gray-300 hover:border-blue-400 hover:text-blue-400 bg-transparent transition-colors duration-200"
+                        asChild
+                        disabled={!project.githubUrl || project.githubUrl === '#'}
+                      >
+                        <Link href={project.githubUrl && project.githubUrl !== '#' ? project.githubUrl : '#'} tabIndex={project.githubUrl && project.githubUrl !== '#' ? 0 : -1} aria-disabled={!project.githubUrl || project.githubUrl === '#'}>
+                          <Github className="h-4 w-4 mr-2" />
+                          GitHub
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            {/* Desktop: Horizontal scroll for the rest */}
+            {projects.length > 3 && (
+              <div className="flex overflow-x-auto gap-8 mt-8 pb-2 scrollbar-thin scrollbar-thumb-slate-700">
+                {projects.slice(3).map((project, index) => (
+                  <Card key={index} className="min-w-[320px] max-w-xs bg-slate-900 border-slate-700 hover:border-blue-400 transition-colors duration-200">
+                    <div className="relative h-48 overflow-hidden rounded-t-lg">
+                      <Image src={project.image || "/placeholder.svg"} alt={project.title} width={300} height={200} className="object-cover w-full h-48" />
+                    </div>
+                    <CardHeader>
+                      <CardTitle className="text-blue-400">{project.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="text-gray-300 mb-4">{project.description}</CardDescription>
+                      <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          className="bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200"
+                          asChild
+                          disabled={!project.demoUrl || project.demoUrl === '#'}
+                        >
+                          <Link href={project.demoUrl && project.demoUrl !== '#' ? project.demoUrl : '#'} tabIndex={project.demoUrl && project.demoUrl !== '#' ? 0 : -1} aria-disabled={!project.demoUrl || project.demoUrl === '#'}>
+                            <ExternalLink className="h-4 w-4 mr-2" />
+                            Live Demo
+                          </Link>
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="border-slate-600 text-gray-300 hover:border-blue-400 hover:text-blue-400 bg-transparent transition-colors duration-200"
+                          asChild
+                          disabled={!project.githubUrl || project.githubUrl === '#'}
+                        >
+                          <Link href={project.githubUrl && project.githubUrl !== '#' ? project.githubUrl : '#'} tabIndex={project.githubUrl && project.githubUrl !== '#' ? 0 : -1} aria-disabled={!project.githubUrl || project.githubUrl === '#'}>
+                            <Github className="h-4 w-4 mr-2" />
+                            GitHub
+                          </Link>
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -661,7 +807,37 @@ export default function Portfolio() {
 
           <Card className="bg-slate-900 border-slate-700">
             <CardContent className="p-8">
-              <form className="space-y-6">
+              <form
+                className="space-y-6"
+                action="#"
+                method="POST"
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  setFormLoading(true);
+                  setFormError(null);
+                  const form = e.currentTarget;
+                  const formData = new FormData(form);
+                  try {
+                    const response = await fetch("https://formspree.io/f/mblkrwda", {
+                      method: "POST",
+                      body: formData,
+                      headers: {
+                        Accept: "application/json",
+                      },
+                    });
+                    if (response.ok) {
+                      setFormSubmitted(true);
+                      form.reset();
+                    } else {
+                      setFormError("Something went wrong. Please try again later.");
+                    }
+                  } catch (err) {
+                    setFormError("Something went wrong. Please try again later.");
+                  } finally {
+                    setFormLoading(false);
+                  }
+                }}
+              >
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
@@ -669,9 +845,11 @@ export default function Portfolio() {
                     </label>
                     <Input
                       id="name"
+                      name="name"
                       type="text"
                       className="bg-slate-800 border-slate-600 text-white focus:border-blue-400 focus:ring-blue-400"
                       placeholder="Your name"
+                      required
                     />
                   </div>
                   <div>
@@ -680,9 +858,11 @@ export default function Portfolio() {
                     </label>
                     <Input
                       id="email"
+                      name="email"
                       type="email"
                       className="bg-slate-800 border-slate-600 text-white focus:border-blue-400 focus:ring-blue-400"
                       placeholder="your.email@example.com"
+                      required
                     />
                   </div>
                 </div>
@@ -692,20 +872,31 @@ export default function Portfolio() {
                   </label>
                   <Textarea
                     id="message"
+                    name="message"
                     rows={6}
                     className="bg-slate-800 border-slate-600 text-white focus:border-blue-400 focus:ring-blue-400"
                     placeholder="Tell me about your project or question..."
+                    required
                   />
                 </div>
+                {/* Optionally, add a hidden input for redirect or reply-to */}
+                {/* <input type="hidden" name="_replyto" value="" /> */}
                 <div className="text-center">
                   <Button
                     type="submit"
                     className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold transition-colors duration-200"
+                    disabled={formLoading}
                   >
                     <Mail className="h-5 w-5 mr-2" />
-                    Send Message
+                    {formLoading ? "Sending..." : "Send Message"}
                   </Button>
                 </div>
+                {formSubmitted && (
+                  <div className="text-green-400 text-center mt-4">Thank you! Your message has been sent.</div>
+                )}
+                {formError && (
+                  <div className="text-red-400 text-center mt-4">{formError}</div>
+                )}
               </form>
             </CardContent>
           </Card>
@@ -723,13 +914,13 @@ export default function Portfolio() {
               {[
                 { href: "https://github.com/anuradha99n", icon: Github },
                 { href: "https://www.linkedin.com/in/anuradha99/", icon: Linkedin },
-                { href: "mailto:contact@example.com", icon: Mail },
+                { href: "mailto:anuradhayga@gmail.com", icon: Mail },
               ].map((social, index) => (
                 <Link
                   key={index}
                   href={social.href}
                   className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
-                  target={social.href.startsWith("http") ? "_blank" : undefined}
+                  target="_blank"
                 >
                   <social.icon className="h-6 w-6" />
                 </Link>

@@ -20,11 +20,11 @@ A modern, responsive developer portfolio built with Next.js, React, and Tailwind
 - [Embla Carousel](https://www.embla-carousel.com/) (for project slider)
 - [Formspree](https://formspree.io/) (for contact form)
 
-## 📸 Screenshots
+<!-- ## 📸 Screenshots
 
-![Portfolio Screenshot](public/assets/images/portfolio-screenshot.png)
+![Portfolio Screenshot](public/assets/images/portfolio-screenshot.png) -->
 
-## 🧑‍💻 Getting Started
+<!-- ## 🧑‍💻 Getting Started
 
 1. **Clone the repo:**
    ```bash
@@ -43,7 +43,7 @@ A modern, responsive developer portfolio built with Next.js, React, and Tailwind
    # or
    yarn dev
    ```
-4. **Open [http://localhost:3000](http://localhost:3000) in your browser.**
+4. **Open [http://localhost:3000](http://localhost:3000) in your browser.** -->
 
 ## 📁 Project Structure
 
@@ -52,10 +52,10 @@ A modern, responsive developer portfolio built with Next.js, React, and Tailwind
 - `public/assets/images/` — Project and profile images
 - `app/page.tsx` — Main portfolio page
 
-## ✨ Customization
+<!-- ## ✨ Customization
 - Update your info, projects, and articles in `app/page.tsx`.
 - Add images to `public/assets/images/` and reference them in your project objects.
-- Configure the contact form with your [Formspree](https://formspree.io/) form ID.
+- Configure the contact form with your [Formspree](https://formspree.io/) form ID. -->
 
 ## 📬 Contact
 
